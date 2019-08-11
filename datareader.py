@@ -3,7 +3,6 @@ from datetime import datetime as dt
 import matplotlib.pyplot as plt
 from matplotlib import style
 import pandas as pd
-import pandas_datareader.data as web
 import os
 import re
 import requests
@@ -46,14 +45,11 @@ class backtest_database:
         day_begin_unix = self.convert_to_unix(self.start)
         day_end_unix = self.convert_to_unix(self.end)
         crumb, cookies = self._get_crumbs_and_cookies()
-        # print(crumb)
         with requests.session():
             url = 'https://query1.finance.yahoo.com/v7/finance/download/' \
                   '{stock}?period1={day_begin}&period2={day_end}&interval={interval}d&events=history&crumb={crumb}' \
                   .format(stock=self.ticker, day_begin=day_begin_unix, day_end=day_end_unix, interval=self.interval, crumb=crumb)
-            # print(url)
             website = requests.get(url, cookies=cookies)
-            # website.text.split('\n')[:-1]
             if website.status_code == 200:
                 decoded_content = website.content.decode('utf-8')
                 with open(self.ticker + '.csv', 'w') as f:
