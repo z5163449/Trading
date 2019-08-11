@@ -8,7 +8,7 @@ import os
 import re
 import requests
 from time import mktime
-from request.auth import HTTPBasicAuth
+from requests.auth import HTTPBasicAuth
 
 class backtest_database:
     def __init__(self, ticker, start, end, interval):
@@ -30,17 +30,10 @@ class backtest_database:
     def _get_crumbs_and_cookies(self):
         url = 'https://finance.yahoo.com/quote/{}/history'.format(self.ticker)
         session = requests.Session()
-            # header = {'Connection': 'keep-alive',
-            #        'Expires': '-1',
-            #        'Upgrade-Insecure-Requests': '1',
-            #        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5)' \
-            #        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
-            #        }
         jar = requests.cookies.RequestsCookieJar()
         jar.set('B','2hk21p1cfof63&b=3&s=7d')
         session.cookies = jar
-        website = session.get(url, auth=HTTPBasicAuth('user','pass'))#, headers=header)
-        #print(website.cookies)
+        website = session.get(url)
         soup = BeautifulSoup(website.text, 'lxml')
         crumb = re.findall('"CrumbStore":{"crumb":"(.+?)"}', str(soup))
         return (crumb[0], session.cookies)
@@ -56,9 +49,12 @@ class backtest_database:
         # print(crumb)
         with requests.session():
             url = 'https://query1.finance.yahoo.com/v7/finance/download/' \
-                  '{stock}?period1={day_begin}&period2={day_end}&interval={interval}&events=history&crumb={crumb}' \
+                  '{stock}?period1={day_begin}&period2={day_end}&interval={interval}d&events=history&crumb={crumb}' \
                   .format(stock=self.ticker, day_begin=day_begin_unix, day_end=day_end_unix, interval=self.interval, crumb=crumb)
-            print(url)
+            # print(url)
             website = requests.get(url, cookies=cookies)
-            website.text.split('\n')[:-1]
-            # print(website)
+            # website.text.split('\n')[:-1]
+            if website.status_code == 200:
+                decoded_content = website.content.decode('utf-8')
+                with open(self.ticker + '.csv', 'w') as f:
+                    f.writelines(decoded_content)
