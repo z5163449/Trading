@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 1. Python csv reader
 2. plot prices using matplotlib
 3. create EWMA
+=======
+1. Python csv reader - DONE
+2. Plot prices using matplotlib
+3. Create function to calculate EWMA and plot
+>>>>>>> 5fa25919cba5a4b85851bf932e2d67b22d2523ac
