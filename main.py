@@ -9,9 +9,9 @@ def main():
 	CBA.plot_adj_close()
 	CBA.plot_ewm(30,'red')
 	CBA.plot_ewm(50,'green')
-	CBA.show_plot()
-
-	model = sm.OLS(extr_adj_close, dates).fit()
+	# CBA.show_plot()
+	df_CBA = CBA.read_csv()
+	model = sm.OLS(df_CBA['Adj Close'], df_CBA['Date']).fit()
 
 	np.random.seed(123)
 	df = pd.DataFrame(np.random.randint(0, 100, size=(100, 3)), columns=list('ABC'))
