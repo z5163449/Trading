@@ -2,12 +2,15 @@ from bs4 import BeautifulSoup
 from datetime import datetime as dt
 import matplotlib.pyplot as plt
 from matplotlib import style
+import matplotlib.dates as mdates
 import pandas as pd
 import os
 import re
 import requests
 from time import mktime
 from requests.auth import HTTPBasicAuth
+
+style.use('ggplot')
 
 class backtest_database:
     def __init__(self, ticker, start, end, interval):
@@ -22,8 +25,23 @@ class backtest_database:
     def set_end_date(self, newEndDate):
         self.end = newEndDate
 
+    def plot_adj_close(self):
+        df = self.read_csv()
+        df = df.dropna(how='any', axis=0)
+        df.plot(kind='line', x ='Date', y = 'Adj Close', color='blue')
+
+    def plot_ewm(self, span, colour):
+        df = self.read_csv()
+        ewm = df['Adj Close'].ewm(span=span, adjust=False).mean()
+        plt.plot(df['Date'], ewm, label='CBA {} Day Average'.format(span), color=colour)
+
+    def show_plot(self):
+        plt.legend()
+        plt.show()
+
     def read_csv(self):
-        return pd.read_csv(self.ticker + '.csv')
+        dateparse = lambda x: pd.datetime.strptime(x, '%Y-%m-%d')
+        return pd.read_csv(self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
 
     # WEBSCRAPING FUNCTIONS
     def _get_crumbs_and_cookies(self):

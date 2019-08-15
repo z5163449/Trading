@@ -4,24 +4,12 @@ import statsmodels.api as sm
 def main():
 
 	CBA = backtest_database('CBA.AX','2017-01-30','2019-08-11',1)
-	#CBA.create_csv()
+	# CBA.create_csv()
 
-	df_CBA = CBA.read_csv()
-	df_CBA = df_CBA.dropna(how='any', axis=0)
-	df_CBA.plot(kind='line', x ='Date', y = 'Adj Close', color='blue')
-
-	extr_adj_close = df_CBA['Adj Close']
-	dates = df_CBA['Date']
-
-	ewm_30 = extr_adj_close.ewm(span=30, adjust=False).mean()
-	ewm_50 = extr_adj_close.ewm(span=50, adjust=False).mean()
-
-	plt.plot(df_CBA.Date, df_CBA['Adj Close'], label='Adj Close', color='blue')
-	plt.plot(df_CBA.Date, ewm_30, label='CBA 30 Day Average', color='red')
-	plt.plot(df_CBA.Date, ewm_50, label='CBA 50 Day Average', color='green')
-	plt.gca().legend(('Adj Close', 'CBA 30 Day Average','CBA 50 Day Average'))
-	#plt.show()
-
+	CBA.plot_adj_close()
+	CBA.plot_ewm(30,'red')
+	CBA.plot_ewm(50,'green')
+	CBA.show_plot()
 
 	model = sm.OLS(extr_adj_close, dates).fit()
 
