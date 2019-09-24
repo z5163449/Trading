@@ -39,9 +39,17 @@ class backtest_database:
         plt.legend()
         plt.show()
 
+    # def scatter_plot(self):
+    #     df = self.read_csv()
+    #     plt.scatter(df["Date"], df["Volume"], alpha=0.8, s=30, c='red', label="Volume")
+    #     plt.scatter(df["Date"], df["Close"], alpha=0.8, s=30, c='green', label="Close")
+    #     plt.title("Adj Close vs Open")
+    #     plt.xlabel('Time')
+    #     plt.ylabel('Price')
+
     def read_csv(self):
         dateparse = lambda x: pd.datetime.strptime(x, '%Y-%m-%d')
-        return pd.read_csv(self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
+        return pd.read_csv('asx200/' + self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
 
     # WEBSCRAPING FUNCTIONS
     def _get_crumbs_and_cookies(self):
@@ -70,5 +78,5 @@ class backtest_database:
             website = requests.get(url, cookies=cookies)
             if website.status_code == 200:
                 decoded_content = website.content.decode('utf-8')
-                with open(self.ticker + '.csv', 'w') as f:
+                with open('asx200/' +self.ticker + '.csv', 'w') as f:
                     f.writelines(decoded_content)
