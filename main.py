@@ -1,5 +1,10 @@
 from datareader import *
+import matplotlib.pyplot as plt
+from plotting import *
 import statsmodels.api as sm
+from misc import *
+import leastSquares as lsModel
+import numpy as np
 
 def main():
 
@@ -9,31 +14,35 @@ def main():
 	# 	tmp = backtest_database(code + '.AX','2017-01-30','2019-08-11',1)
 	# 	tmp.create_csv()
 
-	# CBA = backtest_database('CBA.AX','2017-01-30','2019-08-11',1)
-	# CBA.create_csv()
+	CBA = backtest_database('CBA.AX','2017-01-30','2019-08-11',1)
+	df_CBA = CBA.read_csv()
+	linearOLS(df_CBA)
 
-	# CBA.plot_adj_close()
-	# CBA.plot_ewm(30,'red')
-	# CBA.plot_ewm(50,'green')
-	# CBA.scatter_plot()
-	# CBA.show_plot()
-	# df_CBA = CBA.read_csv()
-	# model = sm.OLS(df_CBA['Adj Close'], df_CBA['Date']).fit()
-	#
-	# np.random.seed(123)
-	# df = pd.DataFrame(np.random.randint(0, 100, size=(100, 3)), columns=list('ABC'))
 
-	# assign dependent and independent / explanatory variables
-	# variables = list(df.columns)
-	# y = 'A'
-	# x = [var for var in variables if var not in y]
-	# Ordinary least squares regression
-	# model_Simple = sm.OLS(df[y], df[x]).fit()
-	#
-	# # Add a constant term like so:
-	# model = sm.OLS(df[y], sm.add_constant(df[x])).fit()
-	#
-	# model.summary()
+# Simple regression using date as parameter and Adj close as output\
+def linearOLS(df):
+	y = df['Adj Close']
+	X = np.linspace(1,len(y),len(y))
+	X = np.array(X).reshape(len(X),1)
+	y = np.array(y).reshape(len(y),1)
+	slice = round(len(X)/2)
+	Xtrain = X[0:slice]
+	ytrain = y[0:slice]
+	Xtest = X[slice:len(X)]
+	ytest = y[slice:len(y)]
+	regress = lsModel.leastSquaresModel(Xtrain,ytrain)
+	yhat_train = regress.predict(Xtrain)
+	testError = E((yhat_train - ytrain)**2)
+	print("Training Error =", testError)
+	yhat = regress.predict(Xtest)
+	testError = E((yhat - ytest)**2)
+	print("Training Error =", testError)
+	yplot = np.vstack((yhat_train, yhat))
+	df.plot(kind='line', x ='Date', y = 'Adj Close', color='blue')
+	plt.plot(df['Date'], yplot, label='Regression', color='green')
+	plt.legend()
+	plt.show()
+
 
 if __name__ == "__main__":
 	main()

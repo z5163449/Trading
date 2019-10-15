@@ -49,7 +49,8 @@ class backtest_database:
 
     def read_csv(self):
         dateparse = lambda x: pd.datetime.strptime(x, '%Y-%m-%d')
-        return pd.read_csv('asx200/' + self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
+        r = pd.read_csv('asx200/' + self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
+        return r.dropna()
 
     # WEBSCRAPING FUNCTIONS
     def _get_crumbs_and_cookies(self):
