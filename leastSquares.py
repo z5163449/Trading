@@ -4,7 +4,13 @@ import numpy as np
 # I need to work out how to make numpy work with 1d array as well as 2d
 class leastSquaresModel:
     def __init__(self,X,y):
-        self.w = np.linalg.solve(X.T@X,X.T@y)
+        (n,d) = np.shape(X)
+        Z = np.ones((n,1))
+        Z = np.hstack((Z,X))
+        self.w = np.linalg.solve(Z.T@Z,Z.T@y)
 
     def predict(self,Xhat):
-        return Xhat*self.w
+        (n,d) = np.shape(Xhat)
+        Z = np.ones((n,1))
+        Z = np.hstack((Z,Xhat))
+        return Z@self.w
