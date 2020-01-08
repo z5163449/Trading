@@ -1,0 +1,18 @@
+1. Figure out what features to include for X
+2. Figure out what we are predicting i.e. what will Y contain (tomorrows close, tomorrows open??? etc.)
+3. Figure out best regression model
+  - Gaussian RBF?
+  - L2 regularised regression?
+  - consider what we are trying to determine, robustness to outliers?
+4. Figure out a buy/sell strategy
+  - for example a simple one would be buy whenever we predict tomorrow's open/close to be higher by certain %
+
+
+Features:
+1. Todays open
+2. Prev close
+3. Prev volume
+4. 15 day ewm
+5. prev Open to prev close ratio (% change per day)
+6. prev close to to open ratio (% change overnight)
+7. % change of volume
