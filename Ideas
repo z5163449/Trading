@@ -16,3 +16,10 @@ Features:
 5. prev Open to prev close ratio (% change per day)
 6. prev close to to open ratio (% change overnight)
 7. % change of volume
+
+Notes:
+Current model uses the above features to predict the adj close of the next X=5 number of days
+Regression model used is the L2-regularised least squares with the kernel trick
+
+
+Read Will Lins beida notes

@@ -14,11 +14,12 @@ def main():
 	# 	tmp = backtest_database(code + '.AX','2018-01-30','2019-08-11',1)
 	# 	tmp.create_csv()
 
-	stock = backtest_database('A2M.AX','2018-01-30','2019-08-11',1)
+	# stock = backtest_database('A2M.AX','2018-01-30','2019-08-11',1)
+	stock = backtest_database('MYX.AX','2018-01-30','2019-08-11',1)
 	df_stock = stock.read_csv()
 	# lsModel.linearOLS(df_stock)
 	# print(df_stock)
-	Xtrain,Xvalid,ytrain,yvalid = load_df(df_stock,ydays=30,valid=1)
+	Xtrain,Xvalid,ytrain,yvalid = adj_close_loader(df_stock,train=300,ydays=5,valid=1)
 
 	# Trying some random shit with scikitlearn
 	# Xtrain = df[0:10]
@@ -29,38 +30,45 @@ def main():
 	model.fit(Xtrain, ytrain)
 	abc = model.predict(Xtrain)
 	yhat = model.predict(Xvalid)
-	print(yhat)
-	print(yvalid)
-	print(df_stock['Adj Close'][76])
-	plt.plot(df_stock['Date'][15:106], df_stock['Adj Close'][15:106], label='Actual Close Price', color='blue')
-	plt.plot(df_stock['Date'][76:106],yhat.T,label='Predicted Close price', color='red')
+	# print(yhat)
+	# print(yvalid)
+	plt.plot(df_stock['Date'][300:320],df_stock['Adj Close'][300:320], label='Actual Close Price', color='blue')
+	plt.plot(df_stock['Date'][315:320],yhat.T,label='Predicted Close price', color='red')
 	plt.legend()
 	plt.show()
 
 # Splits df to training data and y is a 60x15 matrix
 # Matrix y contains the adj close of the next 15 days as this is what we want to predict
-def load_df(df_stock,span=15,train=60,valid=15,ydays=15):
+# Loads dataset for predicting the next adj close prices.
+def adj_close_loader(df_stock,span=15,train=60,valid=15,ydays=15):
 	Xtrain = pd.DataFrame()
 	ytrain = pd.DataFrame(columns=range(ydays))
 	Xvalid = pd.DataFrame()
 	yvalid = pd.DataFrame(columns=range(ydays))
 
 	# from span days to trian + span days since we need at least span number of days for ewm
-	Xtrain['Open'] = df_stock.Open[span:train+span]
-	Xtrain['Adj Close'] = df_stock['Adj Close'][span:train+span]
-	Xtrain['Volume'] = df_stock.Volume[span:train+span]
-	Xtrain['{} day ewm'.format(span)] = df_stock['Adj Close'].ewm(span=span, adjust=False).mean()[span:train+span]
+	Xtrain['Open'] = df_stock.Open[span:train+span].values
+	Xtrain['Prev Adj Close'] = df_stock['Adj Close'][span-1:train+span-1].values
+	Xtrain['Prev Volume'] = df_stock.Volume[span-1:train+span-1].values
+	Xtrain['{} day ewm'.format(span)] = df_stock['Adj Close'].ewm(span=span, adjust=False).mean()[span-1:train+span-1].values
+	# Xtrain['% price change per day'] = (df_stock['Adj Close'][span-1:train+span-1].values - df_stock.Open[span-1:train+span-1].values)/df_stock.Open[span-1:train+span-1].values
+	Xtrain['% volume change per day'] = (df_stock.Volume[span-1:train+span-1].values - df_stock.Volume[span-2:train+span-2].values)/df_stock.Volume[span-2:train+span-2].values
+	Xtrain['% price change overnight'] = (df_stock.Open[span:train+span].values - df_stock['Adj Close'][span-1:train+span-1].values)/df_stock['Adj Close'][span-1:train+span-1].values
 
-	for i in range(1,train+1):
+	for i in range(0,train):
 		ytrain.loc[i] = df_stock['Adj Close'][span+i:span+ydays+i].values
 
-	Xvalid['Open'] = df_stock.Open[train+span:train+span+valid]
-	Xvalid['Adj Close'] = df_stock['Adj Close'][span+train:train+span+valid]
-	Xvalid['Volume'] = df_stock.Volume[span+train:train+span+valid]
-	Xvalid['15 day ewm'] = df_stock['Adj Close'].ewm(span=span, adjust=False).mean()[span+train:train+span+valid]
+	Xvalid['Open'] = df_stock.Open[train+span:train+span+valid].values
+	Xvalid['Prev Adj Close'] = df_stock['Adj Close'][span+train-1:train+span+valid-1].values
+	Xvalid['Prev Volume'] = df_stock.Volume[span+train-1:train+span+valid-1].values
+	Xvalid['{} day ewm'.format(span)] = df_stock['Adj Close'].ewm(span=span, adjust=False).mean()[span+train-1:train+span+valid-1].values
+	# Xvalid['% change per day'] = (df_stock['Adj Close'][span+train-1:train+span+valid-1].values - df_stock.Open[span+train-1:train+span+valid-1].values)/df_stock.Open[span-1:span+train-1:train+span+valid-1].values
+	Xvalid['% volume change per day'] = (df_stock.Volume[span+train-1:train+span+valid-1].values - df_stock.Volume[span+train-2:train+span+valid-2].values)/df_stock.Volume[span+train-2:train+span+valid-2].values
+	Xvalid['% price change overnight'] = (df_stock.Open[train+span:train+span+valid].values - df_stock['Adj Close'][span+train-1:train+span+valid-1].values)/df_stock['Adj Close'][span+train-1:train+span+valid-1].values
 
-	for i in range(1,valid+1):
+	for i in range(0,valid):
 		yvalid.loc[i] = df_stock['Adj Close'][span+train+i:span+ydays+train+i].values
+
 	return Xtrain,Xvalid,ytrain,yvalid
 
 if __name__ == "__main__":

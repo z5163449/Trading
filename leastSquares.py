@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 # Current model can only take in a nx1 matrix
 # I need to work out how to make numpy work with 1d array as well as 2d
 # As in I am currently only taking in 1 variable of input e.g. only taking in price for X
+### Decided not to write my own regression. Using scikitlearn instead.
+### Using the kernel trick to do ridge regression
 class leastSquaresModel:
     def __init__(self,X,y,p,k):
         (n,d) = np.shape(X)
