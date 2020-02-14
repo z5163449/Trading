@@ -4,8 +4,10 @@ from plotting import *
 import statsmodels.api as sm
 from misc import *
 import leastSquares as lsModel
+import masim as mAvgSim
 import numpy as np
-from sklearn import kernel_ridge
+import pandas as pd
+
 
 def main():
 	# Load all asx200 companies as csv files
@@ -13,29 +15,39 @@ def main():
 	# for code in df_asx200['Code']:
 	# 	tmp = backtest_database(code + '.AX','2018-01-30','2019-08-11',1)
 	# 	tmp.create_csv()
-
+	# df_stock = pd.read_csv('ASX200.csv')
+	df_cypt = pd.read_csv('BTC-USD.csv')
 	# stock = backtest_database('A2M.AX','2018-01-30','2019-08-11',1)
-	stock = backtest_database('MYX.AX','2018-01-30','2019-08-11',1)
-	df_stock = stock.read_csv()
-	# lsModel.linearOLS(df_stock)
-	# print(df_stock)
-	Xtrain,Xvalid,ytrain,yvalid = adj_close_loader(df_stock,train=300,ydays=5,valid=1)
+	# stock = backtest_database('MYX.AX','2018-01-30','2019-08-11',1)
+	# df_stock = stock.read_csv()
+	# ma30 = df_stock['Adj Close'].rolling(30).mean()
+	# ma20 = df_stock['Adj Close'].rolling(20).mean()
+	# ma10 = df_stock['Adj Close'].rolling(10).mean()
+	# ma5 = df_stock['Adj Close'].rolling(5).mean()
+	sim = mAvgSim.movingAverageSim(df_cypt)
+	sim.run_simulation()
+	# sim.plot_graph()
 
-	# Trying some random shit with scikitlearn
-	# Xtrain = df[0:10]
-	# ytrain = df['Adj Close'][10:20]
-	# Xvalid = df[20:30]
-	# yvalid = df['Adj Close'][30:40]
-	model = kernel_ridge.KernelRidge(alpha=1)
-	model.fit(Xtrain, ytrain)
-	abc = model.predict(Xtrain)
-	yhat = model.predict(Xvalid)
-	# print(yhat)
-	# print(yvalid)
-	plt.plot(df_stock['Date'][300:320],df_stock['Adj Close'][300:320], label='Actual Close Price', color='blue')
-	plt.plot(df_stock['Date'][315:320],yhat.T,label='Predicted Close price', color='red')
-	plt.legend()
-	plt.show()
+	# # Trying some random shit with scikitlearn
+	# model = kernel_ridge.KernelRidge(alpha=1)
+	# model.fit(Xtrain, ytrain)
+	# abc = model.predict(Xtrain)
+	# yhat = model.predict(Xvalid)
+	#
+	# plt.plot(df_stock['Date'][300:320],df_stock['Adj Close'][300:320], label='Actual Close Price', color='blue')
+	# plt.plot(df_stock['Date'][315:320],yhat.T,label='Predicted Close price', color='red')
+	# plt.legend()
+	# plt.show()
+
+
+	# plt.plot(df_stock['Date'],adj_close_30d, label='30 day average Close Price')
+	# plt.plot(df_stock['Date'],adj_close_20d, label='20 day average Close Price')
+	# plt.plot(df_stock['Date'],adj_close_10d, label='10 day average Close Price')
+	# plt.plot(df_stock['Date'],adj_close_5d, label='5 day average Close Price')
+	# plt.plot(df_stock['Date'],df_stock['Adj Close'], label='Actual Close Price')
+	# plt.legend()
+	# plt.show()
+
 
 # Splits df to training data and y is a 60x15 matrix
 # Matrix y contains the adj close of the next 15 days as this is what we want to predict

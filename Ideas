@@ -23,3 +23,40 @@ Regression model used is the L2-regularised least squares with the kernel trick
 
 
 Read Will Lins beida notes
+
+Work with kelvin night of 9th feb 2020
+# holding = False
+# for i in range(30,200):
+#     if (self.ma30[i] < self.ma10[i] and holding == False):
+#         holding = True
+#         bought_at = self.df_stock['Adj Close'][i]
+#         bought_date = self.df_stock['Date'][i]
+#     if (self.ma30[i] > self.ma10[i] and holding == True):
+#         holding = False
+#         sold_at = self.df_stock['Adj Close'][i]
+#         sold_date = self.df_stock['Date'][i]
+#         self.returns = self.returns.append({'Bought Date' : bought_date,
+# 						'Sold Date' : sold_date,
+# 						'% return' :(sold_at - bought_at)/bought_at}, ignore_index=True)
+#     if holding:
+#         curr_return = (self.df_stock['Adj Close'][i] - bought_at)/bought_at
+#         if (curr_return >= 0.025 or curr_return <= -0.025):
+#             holding = False
+#             sold_at = self.df_stock['Adj Close'][i]
+#             sold_date = self.df_stock['Date'][i]
+#             self.returns = self.returns.append({'Bought Date' : bought_date,
+# 							'Sold Date' : sold_date,
+# 							'% return' :(sold_at - bought_at)/bought_at}, ignore_index=True)
+
+
+Moving Average Simulation
+- Vectorise signals in +1 or -1 (this will be yhat)
+  - where +1 represents upward trend for the next 5 days
+  - -1 represents downward trend in the next 5 days
+    - Calculate trend based on average open-close return prices
+      - signal = sign((close - open)/open)
+- Xhat will contain:
+  - diff_ma_x_y = mAvgX- mAvegY (do this for 30,20,10,5)
+    - (30-20), (30-10), (30-5), (20-10), (20-5), (10-5) -> could just take the sign of them as they represent cross over points
+    - This won't work as we need to obtain the crossover point -> maybe have another column for the previous sign
+  -
