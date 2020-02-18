@@ -59,4 +59,7 @@ Moving Average Simulation
   - diff_ma_x_y = mAvgX- mAvegY (do this for 30,20,10,5)
     - (30-20), (30-10), (30-5), (20-10), (20-5), (10-5) -> could just take the sign of them as they represent cross over points
     - This won't work as we need to obtain the crossover point -> maybe have another column for the previous sign
-  -
+- Notes on sim
+  - Can't buy/sell at open of that day since we are using the open
+    - maybe buy/sell at the median of the high and close price
+  - more data the worse it does??!?!?!??!?! overfitting???!?!?!?! what is going on?

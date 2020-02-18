@@ -1,201 +1,197 @@
-Code,Company,Sector
-ABP,Abacus Property Group FP Ordinary/Units Stapled Securities,Real Estate
-ABC,Adelaide Brighton,Materials
-APT,Afterpay Touch,Information Technology
-AGL,AGL Energy Limited,Utilities
-ALQ,Als Limited,Industrials
-ALU,Altium Limited,Information Technology
-AWC,Alumina Limited,Materials
-AMC,Amcor Plc Cdi 1:1 Foreign Exempt NYSE,Materials
-AMP,AMP Limited,Financials
-ANN,Ansell Limited,Health Care
-ANZ,ANZ Banking Group Limited,Financials
-APA,APA Group FP Units Stapled Securities,Utilities
-APX,Appen Limited,Information Technology
-ARB,ARB Corporation,Consumer Discretionary
-ALG,Ardentleisuregrpltd,Consumer Discretionary
-ALL,Aristocrat Leisure,Consumer Discretionary
-ASX,ASX Limited,Financials
-ALX,Atlas Arteria Stap US Prohibited Excluding QUP,Industrials
-AZJ,Aurizon Holdings Limited,Industrials
-ASL,Ausdrill Limited,Materials
-AST,Ausnet Services Limited,Utilities
-ASB,Austal Limited,Industrials
-API,Australian Pharm,Health Care
-AOG,Aveo Group FP Ordinary/Units Stapled Securities,Real Estate
-BOQ,Bank of Queensland,Financials
-BAP,Bapcor Limited,Consumer Discretionary
-BPT,Beach Energy Limited,Energy
-BGA,Bega Cheese Limited,Consumer Staples
-BAL,Bellamy's Australia,Consumer Staples
-BEN,Bendigo and Adelaide,Financials
-BHP,BHP Group Limited,Materials
-BIN,Bingo Industries Limited,Industrials
-BKL,Blackmores Limited,Consumer Staples
-BSL,Bluescope Steel Limited,Materials
-BLD,Boral Limited,Materials
-BXB,Brambles Limited,Industrials
-BVS,Bravura Solution Limited,Information Technology
-BRG,Breville Group Limited,Consumer Discretionary
-BKW,Brickworks Limited,Materials
-BWP,BWP Trust Ordinary Units FP,Real Estate
-CTX,Caltex Australia,Energy
-CAR,Carsales.com Limited,Information Technology
-CGF,Challenger Limited,Financials
-CHC,Charter Hall Group Stapled Securities US Prohibited,Real Estate
-CQR,Charter Hall Retail Units FP,Real Estate
-CNU,Chorus Limited Foreign Exempt NZX,Telecommunication Services
-CLW,CHTR H LWR FP Units Stapled Securities,Real Estate
-CIM,Cimic Group Limited,Industrials
-CWY,Cleanaway Waste Limited,Industrials
-CUV,Clinuvel Pharmaceut,Health Care
-CCL,Coca-Cola Amatil,Consumer Staples
-COH,Cochlear Limited,Health Care
-COL,Coles Group,Consumer Staples
-CBA,Commonwealth Bank,Financials
-CPU,Computershare Limited,Information Technology
-COE,Cooper Energy Limited,Energy
-CTD,Corp Travel Limited,Consumer Discretionary
-CGC,Costa Group Holdings,Consumer Staples
-CCP,Credit Corp Group,Financials
-CMW,Cromwell Prop FP Ordinary/Units Stapled Securities,Real Estate
-CWN,Crown Resorts Limited,Consumer Discretionary
-CSL,CSL Limited,Health Care
-CSR,CSR Limited,Materials
-CYB,CYBG Plc Cdi 1:1 Foreign Exempt Lse,Financials
-DXS,Dexus FP Units Stapled Securities,Real Estate
-DHG,Domain Holdings Aus,Information Technology
-DMP,Domino PIZZA Enterpr,Consumer Discretionary
-DOW,Downer Edi Limited,Industrials
-ECX,Eclipx Group Limited,Financials
-ELD,Elders Limited,Consumer Staples
-EHL,Emeco Holdings,Industrials
-EHE,Estia Health Limited,Health Care
-EVN,Evolution Mining Limited,Materials
-FPH,Fisher & Paykel H Foreign Exempt NZX,Health Care
-FBU,Fletcher Building Foreign Exempt NZX,Materials
-FLT,Flight Centre Travel,Consumer Discretionary
-FMG,Fortescue Metals Group,Materials
-GUD,G.U.D. Holdings,Consumer Discretionary
-GEM,G8 Education Limited,Consumer Discretionary
-GXY,Galaxy Resources,Materials
-GMG,Goodman Group FP Ordinary/Units Stapled Securities,Real Estate
-GPT,GPT Group FP Ordinary/Units Stapled Securities,Real Estate
-GNC,Graincorp Limited Class A,Consumer Staples
-GOZ,Growthpoint Property FP Ordinary/Units Stapled Securities,Real Estate
-GWA,GWA Group Limited,Industrials
-HVN,Harvey Norman,Consumer Discretionary
-HLS,Healius,Health Care
-HUB,HUB24 Limited,Financials
-IEL,Idp Education Limited,Consumer Discretionary
-ILU,Iluka Resources,Materials
-IPL,Incitec Pivot,Materials
-IGO,Independence Group,Materials
-ING,Inghams Group,Consumer Staples
-IAG,Insurance Australia,Financials
-IVC,Invocare Limited,Consumer Discretionary
-IFL,IOOF Holdings Limited,Financials
-IPH,IPH Limited,Industrials
-IRE,Iress Limited,Information Technology
-JHG,Janus Henderson Chess Depositary Interests 1:1,Financials
-JBH,JB Hi-Fi Limited,Consumer Discretionary
-A2M,The a2 Milk Company,Consumer Staples
-JHX,James Hardie Indust Chess Depositary Interests 1:1,Materials
-LLC,Lendlease Group FP Ordinary/Units Stapled Securities,Real Estate
-LNK,Link Admin HLDG,Information Technology
-LYC,Lynas Corporation,Materials
-MFG,Magellan Fin Group Limited,Financials
-MGR,Mirvac Group FP Ordinary/Units Stapled Securities,Real Estate
-MIN,Mineral Resources,Materials
-MMS,Mcmillan Shakespeare,Industrials
-MND,Monadelphous Group,Industrials
-MPL,Medibank Private Limited,Financials
-MQG,Macquarie Group Limited,Financials
-MTS,Metcash Limited,Consumer Staples
-MYX,Mayne Pharma Limited,Health Care
-NAB,National Aust. Bank,Financials
-NAN,Nanosonics Limited,Health Care
-NCM,Newcrest Mining,Materials
-NEA,Nearmap Limited,Information Technology
-NEC,Nine Entertainment,Consumer Discretionary
-NHC,New Hope Corporation,Energy
-NHF,Nib Holdings Limited,Financials
-NSR,National Storage FP Ordinary/Units Stapled Securities,Real Estate
-NST,Northern Star,Materials
-NUF,Nufarm Limited,Materials
-NWH,NRW Holdings Limited,Industrials
-NWS,News Corp Class B Voting Common Stock-Cdi 1:1,Consumer Discretionary
-NXT,NEXTDC Limited,Information Technology
-OML,Ooh!Media Limited,Consumer Discretionary
-ORA,Orora Limited,Materials
-ORE,Orocobre Limited,Materials
-ORG,Origin Energy,Energy
-ORI,Orica Limited,Materials
-OSH,Oil Search Limited 10 Toea,Energy
-OZL,OZ Minerals,Materials
-PDL,Pendal Group Limited,Financials
-PGH,Pact Group Holdings Limited,Materials
-PLS,Pilbara Min Limited,Materials
-PME,Pro Medicus Limited,Health Care
-PMV,Premier Investments,Consumer Discretionary
-PNI,Pinnacle Investment,Financials
-PPT,Perpetual Limited,Financials
-PTM,Platinum Asset,Financials
-QAN,Qantas Airways,Industrials
-QBE,QBE Insurance Group,Financials
-QUB,QUBE Holdings Limited,Industrials
-REA,REA Group,Information Technology
-RHC,Ramsay Health Care,Health Care
-RIO,RIO Tinto Limited,Materials
-RMD,Resmed Inc Cdi 10:1 Foreign Exempt NYSE,Health Care
-RRL,Regis Resources,Materials
-RSG,Resolute Mining,Materials
-RWC,Reliance Worldwide,Industrials
-S32,SOUTH32 Limited,Materials
-SAR,Saracen Mineral,Materials
-SBM,ST Barbara Limited,Materials
-SCG,Scentre Group FP Ordinary/Units Stapled Securities,Real Estate
-SCP,Sca Property Group FP Units Stapled Securities,Real Estate
-SDA,Speedcast Int Limited,Telecommunication Services
-SDF,Steadfast Group Limited,Financials
-SEK,Seek Limited,Industrials
-SFR,Sandfire Resources,Materials
-SGM,Sims Metal MGMT Limited,Materials
-SGP,Stockland FP Ordinary/Units Stapled Securities,Real Estate
-SGR,The Star Ent Group,Consumer Discretionary
-SHL,Sonic Healthcare,Health Care
-SIG,Sigma Health Limited,Health Care
-SIQ,Smartgrp Corporation,Industrials
-SKC,Skycity Ent Group Limited Foreign Exempt NZX,Consumer Discretionary
-SKI,Spark Infrastructure Stapled $0.65 Loan Note and Unit US Prohib,Utilities
-SOL,Soul Pattinson (W.H),Energy
-SPK,Spark New Zealand Foreign Exempt NZX,Telecommunication Services
-SSM,Service Stream,Industrials
-STO,Santos Limited,Energy
-SUL,Super Ret Rep Limited,Consumer Discretionary
-SUN,Suncorp Group Limited,Financials
-SVW,Seven Group Holdings,Industrials
-SXL,STHN Cross Media,Consumer Discretionary
-SYD,SYD Airport FP Ordinary/Units Stapled Securities,Industrials
-TAH,Tabcorp Holdings Limited,Consumer Discretionary
-TCL,Transurban Group FP Ordinary/Units Stapled Securities,Industrials
-TGR,Tassal Group Limited,Consumer Staples
-TLS,Telstra Corporation,Telecommunication Services
-TNE,Technology One,Information Technology
-TPM,TPG Telecom Limited,Telecommunication Services
-TWE,Treasury Wine Estate,Consumer Staples
-URW,Unibailrodawestfield Chess Depositary Interests 20:1,Real Estate
-VCX,Vicinity Centres FP Ordinary/Units Stapled Securities,Real Estate
-VEA,Viva Energy Group,Energy
-VOC,Vocus Group Limited,Telecommunication Services
-VVR,Viva Energy REIT FP Ordinary/Units Stapled Securities,Real Estate
-WBC,Westpac Banking Corp,Financials
-WEB,Webjet Limited,Consumer Discretionary
-WES,Wesfarmers Limited,Consumer Discretionary
-WHC,Whitehaven Coal,Energy
-WOR,Worleyparsons Limited,Energy
-WOW,Woolworths Group Limited,Consumer Staples
-WPL,Woodside Petroleum,Energy
-WSA,Western Areas Limited,Materials
-WTC,Wisetech Global Limited,Information Technology
-XRO,Xero Limited,Information Technology
+,Code,Company,Sector
+0,ABP.AX,Abacus Property Group FP Ordinary/Units Stapled Securities,Real Estate
+1,ABC.AX,Adelaide Brighton,Materials
+2,APT.AX,Afterpay Touch,Information Technology
+3,AGL.AX,AGL Energy Limited,Utilities
+4,ALQ.AX,Als Limited,Industrials
+5,ALU.AX,Altium Limited,Information Technology
+6,AWC.AX,Alumina Limited,Materials
+7,AMC.AX,Amcor Plc Cdi 1:1 Foreign Exempt NYSE,Materials
+8,AMP.AX,AMP Limited,Financials
+9,ANN.AX,Ansell Limited,Health Care
+10,ANZ.AX,ANZ Banking Group Limited,Financials
+11,APA.AX,APA Group FP Units Stapled Securities,Utilities
+12,APX.AX,Appen Limited,Information Technology
+13,ARB.AX,ARB Corporation,Consumer Discretionary
+14,ALG.AX,Ardentleisuregrpltd,Consumer Discretionary
+15,ALL.AX,Aristocrat Leisure,Consumer Discretionary
+16,ASX.AX,ASX Limited,Financials
+17,ALX.AX,Atlas Arteria Stap US Prohibited Excluding QUP,Industrials
+18,AZJ.AX,Aurizon Holdings Limited,Industrials
+19,AST.AX,Ausnet Services Limited,Utilities
+20,ASB.AX,Austal Limited,Industrials
+21,API.AX,Australian Pharm,Health Care
+22,BOQ.AX,Bank of Queensland,Financials
+23,BAP.AX,Bapcor Limited,Consumer Discretionary
+24,BPT.AX,Beach Energy Limited,Energy
+25,BGA.AX,Bega Cheese Limited,Consumer Staples
+26,BEN.AX,Bendigo and Adelaide,Financials
+27,BHP.AX,BHP Group Limited,Materials
+28,BIN.AX,Bingo Industries Limited,Industrials
+29,BKL.AX,Blackmores Limited,Consumer Staples
+30,BSL.AX,Bluescope Steel Limited,Materials
+31,BLD.AX,Boral Limited,Materials
+32,BXB.AX,Brambles Limited,Industrials
+33,BVS.AX,Bravura Solution Limited,Information Technology
+34,BRG.AX,Breville Group Limited,Consumer Discretionary
+35,BKW.AX,Brickworks Limited,Materials
+36,BWP.AX,BWP Trust Ordinary Units FP,Real Estate
+37,CTX.AX,Caltex Australia,Energy
+38,CAR.AX,Carsales.com Limited,Information Technology
+39,CGF.AX,Challenger Limited,Financials
+40,CHC.AX,Charter Hall Group Stapled Securities US Prohibited,Real Estate
+41,CQR.AX,Charter Hall Retail Units FP,Real Estate
+42,CNU.AX,Chorus Limited Foreign Exempt NZX,Telecommunication Services
+43,CLW.AX,CHTR H LWR FP Units Stapled Securities,Real Estate
+44,CIM.AX,Cimic Group Limited,Industrials
+45,CWY.AX,Cleanaway Waste Limited,Industrials
+46,CUV.AX,Clinuvel Pharmaceut,Health Care
+47,CCL.AX,Coca-Cola Amatil,Consumer Staples
+48,COH.AX,Cochlear Limited,Health Care
+49,COL.AX,Coles Group,Consumer Staples
+50,CBA.AX,Commonwealth Bank,Financials
+51,CPU.AX,Computershare Limited,Information Technology
+52,COE.AX,Cooper Energy Limited,Energy
+53,CTD.AX,Corp Travel Limited,Consumer Discretionary
+54,CGC.AX,Costa Group Holdings,Consumer Staples
+55,CCP.AX,Credit Corp Group,Financials
+56,CMW.AX,Cromwell Prop FP Ordinary/Units Stapled Securities,Real Estate
+57,CWN.AX,Crown Resorts Limited,Consumer Discretionary
+58,CSL.AX,CSL Limited,Health Care
+59,CSR.AX,CSR Limited,Materials
+60,DXS.AX,Dexus FP Units Stapled Securities,Real Estate
+61,DHG.AX,Domain Holdings Aus,Information Technology
+62,DMP.AX,Domino PIZZA Enterpr,Consumer Discretionary
+63,DOW.AX,Downer Edi Limited,Industrials
+64,ECX.AX,Eclipx Group Limited,Financials
+65,ELD.AX,Elders Limited,Consumer Staples
+66,EHL.AX,Emeco Holdings,Industrials
+67,EHE.AX,Estia Health Limited,Health Care
+68,EVN.AX,Evolution Mining Limited,Materials
+69,FPH.AX,Fisher & Paykel H Foreign Exempt NZX,Health Care
+70,FBU.AX,Fletcher Building Foreign Exempt NZX,Materials
+71,FLT.AX,Flight Centre Travel,Consumer Discretionary
+72,FMG.AX,Fortescue Metals Group,Materials
+73,GUD.AX,G.U.D. Holdings,Consumer Discretionary
+74,GEM.AX,G8 Education Limited,Consumer Discretionary
+75,GXY.AX,Galaxy Resources,Materials
+76,GMG.AX,Goodman Group FP Ordinary/Units Stapled Securities,Real Estate
+77,GPT.AX,GPT Group FP Ordinary/Units Stapled Securities,Real Estate
+78,GNC.AX,Graincorp Limited Class A,Consumer Staples
+79,GOZ.AX,Growthpoint Property FP Ordinary/Units Stapled Securities,Real Estate
+80,GWA.AX,GWA Group Limited,Industrials
+81,HVN.AX,Harvey Norman,Consumer Discretionary
+82,HLS.AX,Healius,Health Care
+83,HUB.AX,HUB24 Limited,Financials
+84,IEL.AX,Idp Education Limited,Consumer Discretionary
+85,ILU.AX,Iluka Resources,Materials
+86,IPL.AX,Incitec Pivot,Materials
+87,IGO.AX,Independence Group,Materials
+88,ING.AX,Inghams Group,Consumer Staples
+89,IAG.AX,Insurance Australia,Financials
+90,IVC.AX,Invocare Limited,Consumer Discretionary
+91,IFL.AX,IOOF Holdings Limited,Financials
+92,IPH.AX,IPH Limited,Industrials
+93,IRE.AX,Iress Limited,Information Technology
+94,JHG.AX,Janus Henderson Chess Depositary Interests 1:1,Financials
+95,JBH.AX,JB Hi-Fi Limited,Consumer Discretionary
+96,A2M.AX,The a2 Milk Company,Consumer Staples
+97,JHX.AX,James Hardie Indust Chess Depositary Interests 1:1,Materials
+98,LLC.AX,Lendlease Group FP Ordinary/Units Stapled Securities,Real Estate
+99,LNK.AX,Link Admin HLDG,Information Technology
+100,LYC.AX,Lynas Corporation,Materials
+101,MFG.AX,Magellan Fin Group Limited,Financials
+102,MGR.AX,Mirvac Group FP Ordinary/Units Stapled Securities,Real Estate
+103,MIN.AX,Mineral Resources,Materials
+104,MMS.AX,Mcmillan Shakespeare,Industrials
+105,MND.AX,Monadelphous Group,Industrials
+106,MPL.AX,Medibank Private Limited,Financials
+107,MQG.AX,Macquarie Group Limited,Financials
+108,MTS.AX,Metcash Limited,Consumer Staples
+109,MYX.AX,Mayne Pharma Limited,Health Care
+110,NAB.AX,National Aust. Bank,Financials
+111,NAN.AX,Nanosonics Limited,Health Care
+112,NCM.AX,Newcrest Mining,Materials
+113,NEA.AX,Nearmap Limited,Information Technology
+114,NEC.AX,Nine Entertainment,Consumer Discretionary
+115,NHC.AX,New Hope Corporation,Energy
+116,NHF.AX,Nib Holdings Limited,Financials
+117,NSR.AX,National Storage FP Ordinary/Units Stapled Securities,Real Estate
+118,NST.AX,Northern Star,Materials
+119,NUF.AX,Nufarm Limited,Materials
+120,NWH.AX,NRW Holdings Limited,Industrials
+121,NWS.AX,News Corp Class B Voting Common Stock-Cdi 1:1,Consumer Discretionary
+122,NXT.AX,NEXTDC Limited,Information Technology
+123,OML.AX,Ooh!Media Limited,Consumer Discretionary
+124,ORA.AX,Orora Limited,Materials
+125,ORE.AX,Orocobre Limited,Materials
+126,ORG.AX,Origin Energy,Energy
+127,ORI.AX,Orica Limited,Materials
+128,OSH.AX,Oil Search Limited 10 Toea,Energy
+129,OZL.AX,OZ Minerals,Materials
+130,PDL.AX,Pendal Group Limited,Financials
+131,PGH.AX,Pact Group Holdings Limited,Materials
+132,PLS.AX,Pilbara Min Limited,Materials
+133,PME.AX,Pro Medicus Limited,Health Care
+134,PMV.AX,Premier Investments,Consumer Discretionary
+135,PNI.AX,Pinnacle Investment,Financials
+136,PPT.AX,Perpetual Limited,Financials
+137,PTM.AX,Platinum Asset,Financials
+138,QAN.AX,Qantas Airways,Industrials
+139,QBE.AX,QBE Insurance Group,Financials
+140,QUB.AX,QUBE Holdings Limited,Industrials
+141,REA.AX,REA Group,Information Technology
+142,RHC.AX,Ramsay Health Care,Health Care
+143,RIO.AX,RIO Tinto Limited,Materials
+144,RMD.AX,Resmed Inc Cdi 10:1 Foreign Exempt NYSE,Health Care
+145,RRL.AX,Regis Resources,Materials
+146,RSG.AX,Resolute Mining,Materials
+147,RWC.AX,Reliance Worldwide,Industrials
+148,S32.AX,SOUTH32 Limited,Materials
+149,SAR.AX,Saracen Mineral,Materials
+150,SBM.AX,ST Barbara Limited,Materials
+151,SCG.AX,Scentre Group FP Ordinary/Units Stapled Securities,Real Estate
+152,SCP.AX,Sca Property Group FP Units Stapled Securities,Real Estate
+153,SDA.AX,Speedcast Int Limited,Telecommunication Services
+154,SDF.AX,Steadfast Group Limited,Financials
+155,SEK.AX,Seek Limited,Industrials
+156,SFR.AX,Sandfire Resources,Materials
+157,SGM.AX,Sims Metal MGMT Limited,Materials
+158,SGP.AX,Stockland FP Ordinary/Units Stapled Securities,Real Estate
+159,SGR.AX,The Star Ent Group,Consumer Discretionary
+160,SHL.AX,Sonic Healthcare,Health Care
+161,SIG.AX,Sigma Health Limited,Health Care
+162,SIQ.AX,Smartgrp Corporation,Industrials
+163,SKC.AX,Skycity Ent Group Limited Foreign Exempt NZX,Consumer Discretionary
+164,SKI.AX,Spark Infrastructure Stapled $0.65 Loan Note and Unit US Prohib,Utilities
+165,SOL.AX,Soul Pattinson (W.H),Energy
+166,SPK.AX,Spark New Zealand Foreign Exempt NZX,Telecommunication Services
+167,SSM.AX,Service Stream,Industrials
+168,STO.AX,Santos Limited,Energy
+169,SUL.AX,Super Ret Rep Limited,Consumer Discretionary
+170,SUN.AX,Suncorp Group Limited,Financials
+171,SVW.AX,Seven Group Holdings,Industrials
+172,SXL.AX,STHN Cross Media,Consumer Discretionary
+173,SYD.AX,SYD Airport FP Ordinary/Units Stapled Securities,Industrials
+174,TAH.AX,Tabcorp Holdings Limited,Consumer Discretionary
+175,TCL.AX,Transurban Group FP Ordinary/Units Stapled Securities,Industrials
+176,TGR.AX,Tassal Group Limited,Consumer Staples
+177,TLS.AX,Telstra Corporation,Telecommunication Services
+178,TNE.AX,Technology One,Information Technology
+179,TPM.AX,TPG Telecom Limited,Telecommunication Services
+180,TWE.AX,Treasury Wine Estate,Consumer Staples
+181,URW.AX,Unibailrodawestfield Chess Depositary Interests 20:1,Real Estate
+182,VCX.AX,Vicinity Centres FP Ordinary/Units Stapled Securities,Real Estate
+183,VEA.AX,Viva Energy Group,Energy
+184,VOC.AX,Vocus Group Limited,Telecommunication Services
+185,VVR.AX,Viva Energy REIT FP Ordinary/Units Stapled Securities,Real Estate
+186,WBC.AX,Westpac Banking Corp,Financials
+187,WEB.AX,Webjet Limited,Consumer Discretionary
+188,WES.AX,Wesfarmers Limited,Consumer Discretionary
+189,WHC.AX,Whitehaven Coal,Energy
+190,WOR.AX,Worleyparsons Limited,Energy
+191,WOW.AX,Woolworths Group Limited,Consumer Staples
+192,WPL.AX,Woodside Petroleum,Energy
+193,WSA.AX,Western Areas Limited,Materials
+194,WTC.AX,Wisetech Global Limited,Information Technology
+195,XRO.AX,Xero Limited,Information Technology

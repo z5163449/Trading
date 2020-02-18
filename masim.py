@@ -1,9 +1,13 @@
 import numpy as np
 from misc import *
 import pandas as pd
+import statistics as stat
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.svm import LinearSVC
+from sklearn.neighbors import KNeighborsClassifier
 
 class movingAverageSim:
     def __init__(self,df_stock):
@@ -15,44 +19,60 @@ class movingAverageSim:
         self.rsi = self.calculate_rsi()
         self.returns = pd.DataFrame(columns=['Bought Date','Sold Date','% return'])
 
-    def run_simulation(self):
-        holding = False
-        validation = 60
-        Xtrain,Xvalid,ytrain,yvalid = self.create_prediction_data(valid=validation)
-        signals = self.random_forest_signals(Xtrain,ytrain,Xvalid)
-        yvalid = np.ravel(yvalid)
-        print("Validation Error rate =",np.count_nonzero(yvalid-signals)/np.size(signals))
+    def produce_buy_sell(self,ndays):
+        Xtrain,ytrain,Xhat,ytest = self.create_prediction_data(valid=0,test=ndays)
+        clf = self.random_forest_signals(Xtrain,ytrain)
+        signal = clf.predict(Xhat)
+        return signal
 
+    def run_simulation(self,ndays=30):
+        holding = False
+        validation = 0
+        testing = ndays
+        Xtrain,ytrain,Xhat,ytest = self.create_prediction_data(valid=validation,test=testing)
+        ytest = np.ravel(ytest)
+        clf = self.random_forest_signals(Xtrain,ytrain)
+        signals = clf.predict(Xhat)
+        # print("Testing Error rate =",1-clf.score(Xhat,ytest))
         count = 0
-        for i in range(len(self.df_stock)-validation,len(self.df_stock)):
+        transaction_cost = 1.002
+        # print(signals)
+        # print(ytest)
+        # print(Xhat)
+        for i in range(len(self.df_stock)-testing,len(self.df_stock)):
+            # print(self.df_stock['Date'][i])
+            price = (self.df_stock['Open'][i] + self.df_stock['Adj Close'][i])/2
             if (signals[count] == 1 and holding == False):
                 holding = True
-                bought_at = self.df_stock['Open'][i]
+                bought_at = price*transaction_cost
                 bought_date = self.df_stock['Date'][i]
-                # print("Bought at",bought_at)
+                # print("Bought at",bought_date)
                 # print("Closed at",self.df_stock['Close'][i])
             if (signals[count] == -1 and holding == True):
                 holding = False
-                sold_at = self.df_stock['Open'][i]
+                sold_at = price
                 sold_date = self.df_stock['Date'][i]
                 self.returns = self.returns.append({'Bought Date' : bought_date,
         						'Sold Date' : sold_date,
         						'% return' :(sold_at - bought_at)/bought_at}, ignore_index=True)
             count+=1
 
-        self.calculate_profits()
+        net = self.calculate_profits()
+        return net,len(self.returns)
 
 
     def calculate_profits(self):
-        # Note this is saying that the portfolio only has one security so you can't really calcuate sharpe
+        if self.returns.empty:
+            # print("No trades made.")
+            return 0
         net = np.sum(self.returns['% return'])
-        mean = np.mean(self.returns['% return'])
-        std = np.std(self.returns['% return'])
+        mean = stat.mean(self.returns['% return'])
+        # std = stat.stdev(self.returns['% return'])
         print(self.returns)
-        print("Net Profit =",net)
-        print("Mean =",mean)
-        print("Standard Deviation =",std)
-        print("Sharpe =",(mean-0.03)/std)
+        # print(self.returns['Bought Date']-self.returns['Sold Date'])
+        # print("Net Profit =",net)
+        # print("Mean =",mean)
+        return net
 
     def calculate_rsi(self,ndays=10):
         delta = self.df_stock['Adj Close'].diff()
@@ -67,50 +87,46 @@ class movingAverageSim:
         return rsi
 
     # Using RandomForestClassifier to classify signals
-    def random_forest_signals(self,Xtrain,ytrain,Xvalid):
-        clf = RandomForestClassifier(n_estimators=100,max_depth=10,random_state=0)
+    def random_forest_signals(self,Xtrain,ytrain):
+        clf = RandomForestClassifier(n_estimators=50,max_depth=4,
+                                    random_state=0,bootstrap=False)
+        ytrain = ytrain.astype('int')
         clf.fit(Xtrain,np.ravel(ytrain))
-        yhat = clf.predict(Xvalid)
-        return yhat
+        # print("Training Error:",1-clf.score(Xtrain,ytrain))
+        return clf
 
-    def create_prediction_data(self,valid=30):
-        Xtrain = pd.DataFrame(columns=['Open','ma30_20','ma30_10','ma30_5',
-                                        'ma20_10','ma20_5','ma10_5','pma30_20',
-                                        'pma30_10','pma30_5','pma20_10'
+    def create_prediction_data(self,valid=30,test=30):
+        Xtrain = pd.DataFrame(columns=['Open','pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         ytrain = pd.DataFrame(columns=['Classification'])
-        Xvalid = pd.DataFrame(columns=['Open','ma30_20','ma30_10','ma30_5',
-                                                'ma20_10','ma20_5','ma10_5','pma30_20',
-                                                'pma30_10','pma30_5','pma20_10'
-                                                ,'pma20_5','pma10_5','rsi'])
+        Xvalid = pd.DataFrame(columns=['Open','pma30_20','pma30_10','pma30_5','pma20_10'
+                                        ,'pma20_5','pma10_5','rsi'])
         yvalid = pd.DataFrame(columns=['Classification'])
+        Xhat = pd.DataFrame(columns=['Open','pma30_20','pma30_10','pma30_5','pma20_10'
+                                        ,'pma20_5','pma10_5','rsi'])
+        ytest = pd.DataFrame(columns=['Classification'])
 
         Xtrain['Open'] = self.df_stock['Open']
-        Xtrain['ma30_20'] = self.ma30 - self.ma20
-        Xtrain['ma30_10'] = self.ma30 - self.ma10
-        Xtrain['ma30_5'] = self.ma30 - self.ma5
-        Xtrain['ma20_10'] = self.ma20 - self.ma10
-        Xtrain['ma20_5'] = self.ma20 - self.ma5
-        Xtrain['ma10_5'] = self.ma10 - self.ma5
-        Xtrain['pma30_20'] = np.sign(self.ma30 - self.ma20).shift(1)
-        Xtrain['pma30_10'] = np.sign(self.ma30 - self.ma10).shift(1)
-        Xtrain['pma30_5'] = np.sign(self.ma30 - self.ma5).shift(1)
-        Xtrain['pma20_10'] = np.sign(self.ma20 - self.ma10).shift(1)
-        Xtrain['pma20_5'] = np.sign(self.ma20 - self.ma5).shift(1)
-        Xtrain['pma10_5'] = np.sign(self.ma10 - self.ma5).shift(1)
-        Xtrain['rsi'] = self.rsi
+        Xtrain['pma30_20'] = (self.ma30 - self.ma20).shift(1)
+        Xtrain['pma30_10'] = (self.ma30 - self.ma10).shift(1)
+        Xtrain['pma30_5'] = (self.ma30 - self.ma5).shift(1)
+        Xtrain['pma20_10'] = (self.ma20 - self.ma10).shift(1)
+        Xtrain['pma20_5'] = (self.ma20 - self.ma5).shift(1)
+        Xtrain['pma10_5'] = (self.ma10 - self.ma5).shift(1)
+        Xtrain['rsi'] = self.rsi.shift(1)
         Xtrain = Xtrain.dropna()
-
-        ytrain['Classification'] = np.sign(self.df_stock['Adj Close'][30:].values
-                                            - self.df_stock['Open'][30:].values)
-
-        Xvalid = Xtrain[len(Xtrain)-valid:len(Xtrain)]
-        yvalid = ytrain[len(yvalid)-valid:len(Xtrain)]
-        # Xhat = Xtrain[len(Xtrain)-test:]
-        Xtrain = Xtrain[:len(Xtrain)-valid]
-        ytrain = ytrain[:len(ytrain)-valid]
-
-        return Xtrain,Xvalid,ytrain,yvalid
+        # print(Xtrain)
+        ytrain['Classification'] = np.sign((self.df_stock['Adj Close'].shift(-1)
+                                            - self.df_stock['Open']).dropna().values)
+        ytrain = ytrain.iloc[30:]
+        # Xvalid = Xtrain[len(Xtrain)-valid-test:len(Xtrain)-test]
+        # yvalid = ytrain[len(yvalid)-valid-test:len(Xtrain)-test]
+        Xhat = Xtrain[len(Xtrain)-test:]
+        ytest = ytrain[len(Xtrain)-test:]
+        Xtrain = Xtrain[:len(Xtrain)-test-1]
+        ytrain = ytrain[:len(Xtrain)]
+        # print(self.df_stock['Open'][29],self.df_stock['Adj Close'][30],self.df_stock['Open'][30])
+        return Xtrain,ytrain,Xhat,ytest
 
     def plot_graph(self):
         # plt.plot(self.df_stock['Date'],ma30, label='30 day average Close Price')

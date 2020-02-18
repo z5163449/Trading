@@ -18,6 +18,7 @@ class backtest_database:
         self.start = start
         self.end = end
         self.interval = interval
+        self.crumb = 'vGeTNDq8b3L'
 
     def set_start_date(self, newStartDate):
         self.start = newStartDate
@@ -47,9 +48,9 @@ class backtest_database:
     #     plt.xlabel('Time')
     #     plt.ylabel('Price')
 
-    def read_csv(self):
+    def read_csv(self,location):
         dateparse = lambda x: pd.datetime.strptime(x, '%Y-%m-%d')
-        r = pd.read_csv('asx200/' + self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
+        r = pd.read_csv(location + self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
         return r.dropna()
 
     # WEBSCRAPING FUNCTIONS
@@ -62,22 +63,31 @@ class backtest_database:
         website = session.get(url)
         soup = BeautifulSoup(website.text, 'lxml')
         crumb = re.findall('"CrumbStore":{"crumb":"(.+?)"}', str(soup))
-        return (crumb[0], session.cookies)
+        return (session.cookies)
 
     def convert_to_unix(self, date):
         datum = dt.strptime(date, '%Y-%m-%d').timetuple()
         return int(mktime(datum))
 
-    def create_csv(self):
+    def create_csv(self,location):
         day_begin_unix = self.convert_to_unix(self.start)
         day_end_unix = self.convert_to_unix(self.end)
-        crumb, cookies = self._get_crumbs_and_cookies()
+        cookies = self._get_crumbs_and_cookies()
         with requests.session():
             url = 'https://query1.finance.yahoo.com/v7/finance/download/' \
                   '{stock}?period1={day_begin}&period2={day_end}&interval={interval}d&events=history&crumb={crumb}' \
-                  .format(stock=self.ticker, day_begin=day_begin_unix, day_end=day_end_unix, interval=self.interval, crumb=crumb)
+                  .format(stock=self.ticker, day_begin=day_begin_unix, day_end=day_end_unix, interval=self.interval, crumb=self.crumb)
             website = requests.get(url, cookies=cookies)
             if website.status_code == 200:
                 decoded_content = website.content.decode('utf-8')
-                with open('asx200/' +self.ticker + '.csv', 'w') as f:
+                with open(location +self.ticker + '.csv', 'w') as f:
                     f.writelines(decoded_content)
+
+    def get_today_open(self):
+        cookies = self._get_crumbs_and_cookies()
+        url = 'https://xuangubao.cn/stock/{stock}'.format(stock=self.ticker)
+        session = requests.Session()
+        website = session.get(url)
+        soup = BeautifulSoup(website.text,'lxml')
+        price = soup.findAll('span')
+        return price[10].text

@@ -7,81 +7,80 @@ import leastSquares as lsModel
 import masim as mAvgSim
 import numpy as np
 import pandas as pd
-
+import statistics as stat
 
 def main():
-	# Load all asx200 companies as csv files
-	# df_asx200 = pd.read_csv('asx200_list.csv')
-	# for code in df_asx200['Code']:
-	# 	tmp = backtest_database(code + '.AX','2018-01-30','2019-08-11',1)
-	# 	tmp.create_csv()
-	# df_stock = pd.read_csv('ASX200.csv')
-	df_cypt = pd.read_csv('BTC-USD.csv')
-	# stock = backtest_database('A2M.AX','2018-01-30','2019-08-11',1)
-	# stock = backtest_database('MYX.AX','2018-01-30','2019-08-11',1)
-	# df_stock = stock.read_csv()
-	# ma30 = df_stock['Adj Close'].rolling(30).mean()
-	# ma20 = df_stock['Adj Close'].rolling(20).mean()
-	# ma10 = df_stock['Adj Close'].rolling(10).mean()
-	# ma5 = df_stock['Adj Close'].rolling(5).mean()
-	sim = mAvgSim.movingAverageSim(df_cypt)
-	sim.run_simulation()
+	# scrape_data(pd.read_csv('china_stocks.csv'),location='chineseStocks/',
+							# start='2019-09-16',end='2020-02-17')
+	# df_stock = pd.read_csv('603131.csv')
+	# df_cypt = pd.read_csv('ETH-USD.csv')
+	# df_stock = backtest_database('BAL.AX','2019-09-16','2020-02-16',1).read_csv()
+	# sim = mAvgSim.movingAverageSim(df_stock)
+	# net,num_trades = sim.run_simulation()
+	# sim = mAvgSim.movingAverageSim(df_cypt)
 	# sim.plot_graph()
+	# test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/')
+	daily_signal_checker('china_stocks.csv',location='chineseStocks/')
+	# tmp = backtest_database('300261.SZ','2019-09-16','2020-02-16',1)
+	# df_stock = tmp.read_csv('chineseStocks/')
+	# open_price = tmp.get_today_open()
+	# df_stock = df_stock.append({'Open' : open_price},ignore_index=True)
+	# sim = mAvgSim.movingAverageSim(df_stock)
+	# sim.run_simulation(ndays=5)
+	# signals = sim.produce_buy_sell(ndays=1)
+	# print(signals)
 
-	# # Trying some random shit with scikitlearn
-	# model = kernel_ridge.KernelRidge(alpha=1)
-	# model.fit(Xtrain, ytrain)
-	# abc = model.predict(Xtrain)
-	# yhat = model.predict(Xvalid)
-	#
-	# plt.plot(df_stock['Date'][300:320],df_stock['Adj Close'][300:320], label='Actual Close Price', color='blue')
-	# plt.plot(df_stock['Date'][315:320],yhat.T,label='Predicted Close price', color='red')
-	# plt.legend()
-	# plt.show()
+def update_portfolio():
+	portfolio = pd.read_csv(portfolio)
 
+def daily_signal_checker(stocks,location):
+	#requires manul changing because I cbf to learn how to parse dates properly
+	ndays=2
+	# scrape_data(pd.read_csv(stocks),location='chineseStocks/',
+							# start='2019-09-16',end='2020-02-18')
+	stock_list = pd.read_csv(stocks)
+	for code in stock_list['Code']:
+		tmp = backtest_database(code,'2019-09-16','2020-02-17',1)
+		df_stock = tmp.read_csv(location=location)
+		# print(code)
+		open_price = tmp.get_today_open()
+		df_stock = df_stock.append({'Open' : open_price},ignore_index=True)
+		# print(df_stock.tail())
+		sim = mAvgSim.movingAverageSim(df_stock)
+		signals = sim.produce_buy_sell(ndays=ndays)
+		print("Company:",code,
+			"Signals:",signals)
 
-	# plt.plot(df_stock['Date'],adj_close_30d, label='30 day average Close Price')
-	# plt.plot(df_stock['Date'],adj_close_20d, label='20 day average Close Price')
-	# plt.plot(df_stock['Date'],adj_close_10d, label='10 day average Close Price')
-	# plt.plot(df_stock['Date'],adj_close_5d, label='5 day average Close Price')
-	# plt.plot(df_stock['Date'],df_stock['Adj Close'], label='Actual Close Price')
-	# plt.legend()
-	# plt.show()
+def scrape_data(stock_list,location,start,end):
+	for code in stock_list['Code']:
+		print("Got Code:",code)
+		tmp = backtest_database(code,start,end,1)
+		tmp.create_csv(location=location)
 
+def test_stock_list(stock_list,location):
+	returns = pd.DataFrame(columns=['Company','No. Trades','Net return'])
+	for code in stock_list['Code']:
+		df_stock = backtest_database(code,'2019-09-16','2020-02-178',1).read_csv(location=location)
+		sim = mAvgSim.movingAverageSim(df_stock)
+		net,num_trades = sim.run_simulation(ndays=5)
+		if num_trades == 0:
+			continue
+		returns = returns.append({
+			'Company' : code,
+			'No. Trades' : num_trades,
+			'Net return' : net,
+		},ignore_index=True)
+		# print('Company:',code,'\n Number of Trades',num_trades,'\n Net % return',net)
+	net_profit = np.sum(returns['Net return'])
+	companies_traded = len(returns)
+	mean = stat.mean(returns['Net return'])
+	std = stat.stdev(returns['Net return'])
+	print("Net Profit =",net_profit,
+		'\n Total number of companies traded =',companies_traded,
+		'\n Mean Profit =',mean,
+		'\n Standard Deviation',std)
+	print(returns)
 
-# Splits df to training data and y is a 60x15 matrix
-# Matrix y contains the adj close of the next 15 days as this is what we want to predict
-# Loads dataset for predicting the next adj close prices.
-def adj_close_loader(df_stock,span=15,train=60,valid=15,ydays=15):
-	Xtrain = pd.DataFrame()
-	ytrain = pd.DataFrame(columns=range(ydays))
-	Xvalid = pd.DataFrame()
-	yvalid = pd.DataFrame(columns=range(ydays))
-
-	# from span days to trian + span days since we need at least span number of days for ewm
-	Xtrain['Open'] = df_stock.Open[span:train+span].values
-	Xtrain['Prev Adj Close'] = df_stock['Adj Close'][span-1:train+span-1].values
-	Xtrain['Prev Volume'] = df_stock.Volume[span-1:train+span-1].values
-	Xtrain['{} day ewm'.format(span)] = df_stock['Adj Close'].ewm(span=span, adjust=False).mean()[span-1:train+span-1].values
-	# Xtrain['% price change per day'] = (df_stock['Adj Close'][span-1:train+span-1].values - df_stock.Open[span-1:train+span-1].values)/df_stock.Open[span-1:train+span-1].values
-	Xtrain['% volume change per day'] = (df_stock.Volume[span-1:train+span-1].values - df_stock.Volume[span-2:train+span-2].values)/df_stock.Volume[span-2:train+span-2].values
-	Xtrain['% price change overnight'] = (df_stock.Open[span:train+span].values - df_stock['Adj Close'][span-1:train+span-1].values)/df_stock['Adj Close'][span-1:train+span-1].values
-
-	for i in range(0,train):
-		ytrain.loc[i] = df_stock['Adj Close'][span+i:span+ydays+i].values
-
-	Xvalid['Open'] = df_stock.Open[train+span:train+span+valid].values
-	Xvalid['Prev Adj Close'] = df_stock['Adj Close'][span+train-1:train+span+valid-1].values
-	Xvalid['Prev Volume'] = df_stock.Volume[span+train-1:train+span+valid-1].values
-	Xvalid['{} day ewm'.format(span)] = df_stock['Adj Close'].ewm(span=span, adjust=False).mean()[span+train-1:train+span+valid-1].values
-	# Xvalid['% change per day'] = (df_stock['Adj Close'][span+train-1:train+span+valid-1].values - df_stock.Open[span+train-1:train+span+valid-1].values)/df_stock.Open[span-1:span+train-1:train+span+valid-1].values
-	Xvalid['% volume change per day'] = (df_stock.Volume[span+train-1:train+span+valid-1].values - df_stock.Volume[span+train-2:train+span+valid-2].values)/df_stock.Volume[span+train-2:train+span+valid-2].values
-	Xvalid['% price change overnight'] = (df_stock.Open[train+span:train+span+valid].values - df_stock['Adj Close'][span+train-1:train+span+valid-1].values)/df_stock['Adj Close'][span+train-1:train+span+valid-1].values
-
-	for i in range(0,valid):
-		yvalid.loc[i] = df_stock['Adj Close'][span+train+i:span+ydays+train+i].values
-
-	return Xtrain,Xvalid,ytrain,yvalid
 
 if __name__ == "__main__":
 	main()
