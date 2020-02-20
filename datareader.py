@@ -49,8 +49,8 @@ class backtest_database:
     #     plt.ylabel('Price')
 
     def read_csv(self,location):
-        dateparse = lambda x: pd.datetime.strptime(x, '%Y-%m-%d')
-        r = pd.read_csv(location + self.ticker + '.csv', parse_dates=['Date'], date_parser=dateparse)
+        # dateparse = lambda x: pd.datetime.strptime(x, '%Y-%m-%d')
+        r = pd.read_csv(location + self.ticker + '.csv')
         return r.dropna()
 
     # WEBSCRAPING FUNCTIONS
@@ -91,3 +91,12 @@ class backtest_database:
         soup = BeautifulSoup(website.text,'lxml')
         price = soup.findAll('span')
         return price[10].text
+
+    def get_open_close(self):
+        cookies = self._get_crumbs_and_cookies()
+        url = 'https://xuangubao.cn/stock/{stock}'.format(stock=self.ticker)
+        session = requests.Session()
+        website = session.get(url)
+        soup = BeautifulSoup(website.text,'lxml')
+        price = soup.findAll('span')
+        return price[8].text,price[10].text

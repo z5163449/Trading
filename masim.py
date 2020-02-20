@@ -21,6 +21,7 @@ class movingAverageSim:
 
     def produce_buy_sell(self,ndays):
         Xtrain,ytrain,Xhat,ytest = self.create_prediction_data(valid=0,test=ndays)
+        # print(Xhat)
         clf = self.random_forest_signals(Xtrain,ytrain)
         signal = clf.predict(Xhat)
         return signal
@@ -36,8 +37,8 @@ class movingAverageSim:
         # print("Testing Error rate =",1-clf.score(Xhat,ytest))
         count = 0
         transaction_cost = 1.002
-        # print(signals)
-        # print(ytest)
+        print(signals)
+        print(ytest)
         # print(Xhat)
         for i in range(len(self.df_stock)-testing,len(self.df_stock)):
             # print(self.df_stock['Date'][i])
