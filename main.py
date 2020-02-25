@@ -16,13 +16,13 @@ def main():
 							# start='2019-09-16',end='2020-02-17')
 	# df_stock = pd.read_csv('603131.csv')
 	# df_cypt = pd.read_csv('ETH-USD.csv')
-	# df_stock = backtest_database('BAL.AX','2019-09-16','2020-02-16',1).read_csv()
+	# df_stock = backtest_database('603993.SS','2019-09-16','2020-02-20',1).read_csv(location='chineseStocks/')
 	# sim = mAvgSim.movingAverageSim(df_stock)
-	# net,num_trades = sim.run_simulation()
 	# sim = mAvgSim.movingAverageSim(df_cypt)
+	# net,num_trades,test_error = sim.run_simulation(ndays=10)
 	# sim.plot_graph()
-	# test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/',ndays=3)
-	daily_signal_checker('china_stocks.csv',location='chineseStocks/')
+	test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/',ndays=10)
+	# daily_signal_checker('china_stocks.csv',location='chineseStocks/')
 	# update_open_close('china_stocks.csv',location='chineseStocks/')
 	# tmp = backtest_database('300261.SZ','2019-09-16','2020-02-16',1)
 	# df_stock = tmp.read_csv('chineseStocks/')
@@ -37,13 +37,12 @@ def update_portfolio():
 	portfolio = pd.read_csv(portfolio)
 
 def daily_signal_checker(stocks,location):
-	#requires manul changing because I cbf to learn how to parse dates properly
-	ndays=4
+	ndays=1
 	# scrape_data(pd.read_csv(stocks),location='chineseStocks/',
-							# start='2019-09-16',end='2020-02-20')
+							# start='2019-09-16',end='2020-02-25')
 	stock_list = pd.read_csv(stocks)
 	for code in stock_list['Code']:
-		tmp = backtest_database(code,'2019-09-16','2020-02-20',1)
+		tmp = backtest_database(code,'2019-09-16','2020-02-25',1)
 		df_stock = tmp.read_csv(location=location)
 		open_price = tmp.get_today_open()
 		df_stock = df_stock.append({'Open' : open_price},ignore_index=True)
@@ -60,20 +59,22 @@ def scrape_data(stock_list,location,start,end):
 		tmp.create_csv(location=location)
 
 def test_stock_list(stock_list,location,ndays):
-	returns = pd.DataFrame(columns=['Company','No. Trades','Net return'])
+	returns = pd.DataFrame(columns=['Company','No. Trades','Net return','Test Error'])
 	for code in stock_list['Code']:
-		# print(code)
+		print(code)
 		df_stock = backtest_database(code,'2019-09-16','2020-02-178',1).read_csv(location=location)
 		sim = mAvgSim.movingAverageSim(df_stock)
-		net,num_trades = sim.run_simulation(ndays=ndays)
+		net,num_trades,test_error = sim.run_simulation(ndays=ndays)
 		if num_trades == 0:
 			continue
 		returns = returns.append({
 			'Company' : code,
 			'No. Trades' : num_trades,
 			'Net return' : net,
+			'Test Error' : test_error
 		},ignore_index=True)
 		# print('Company:',code,'\n Number of Trades',num_trades,'\n Net % return',net)
+	print(np.mean(returns['Test Error']))
 	net_profit = np.sum(returns['Net return'])
 	companies_traded = len(returns)
 	mean = stat.mean(returns['Net return'])

@@ -34,13 +34,14 @@ class movingAverageSim:
         ytest = np.ravel(ytest)
         clf = self.random_forest_signals(Xtrain,ytrain)
         signals = clf.predict(Xhat)
-        # print("Testing Error rate =",1-clf.score(Xhat,ytest))
+        test_error = 1-clf.score(Xhat[:-1],ytest)
+        # print("Testing Error rate =",test_error)
         count = 0
         transaction_cost = 1.002
-        print(signals)
-        print(ytest)
+        # print(signals)
+        # print(ytest)
         # print(Xhat)
-        for i in range(len(self.df_stock)-testing,len(self.df_stock)):
+        for i in range(len(self.df_stock)-testing,len(self.df_stock)-1):
             # print(self.df_stock['Date'][i])
             price = (self.df_stock['Open'][i] + self.df_stock['Adj Close'][i])/2
             if (signals[count] == 1 and holding == False):
@@ -59,7 +60,7 @@ class movingAverageSim:
             count+=1
 
         net = self.calculate_profits()
-        return net,len(self.returns)
+        return net,len(self.returns),test_error
 
 
     def calculate_profits(self):
@@ -97,17 +98,25 @@ class movingAverageSim:
         return clf
 
     def create_prediction_data(self,valid=30,test=30):
-        Xtrain = pd.DataFrame(columns=['Open','pma30_20','pma30_10','pma30_5','pma20_10'
+        Xtrain = pd.DataFrame(columns=['Open','pAdj_close','pma30_open','pma20_open','pma10_open','pma5_open'
+                                        ,'pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         ytrain = pd.DataFrame(columns=['Classification'])
-        Xvalid = pd.DataFrame(columns=['Open','pma30_20','pma30_10','pma30_5','pma20_10'
+        Xvalid = pd.DataFrame(columns=['Open','pAdj_close','pma30_open','pma20_open','pma10_open','pma5_open'
+                                        ,'pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         yvalid = pd.DataFrame(columns=['Classification'])
-        Xhat = pd.DataFrame(columns=['Open','pma30_20','pma30_10','pma30_5','pma20_10'
+        Xhat = pd.DataFrame(columns=['Open','pAdj_close','pma30_open','pma20_open','pma10_open','pma5_open'
+                                        ,'pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         ytest = pd.DataFrame(columns=['Classification'])
 
         Xtrain['Open'] = self.df_stock['Open']
+        Xtrain['pAdj_close'] = self.df_stock['Adj Close'].shift(1)
+        Xtrain['pma30_open'] = (self.ma30.shift(1) - self.df_stock['Open'])
+        Xtrain['pma20_open'] = (self.ma20.shift(1) - self.df_stock['Open'])
+        Xtrain['pma10_open'] = (self.ma10.shift(1) - self.df_stock['Open'])
+        Xtrain['pma5_open'] = (self.ma5.shift(1) - self.df_stock['Open'])
         Xtrain['pma30_20'] = (self.ma30 - self.ma20).shift(1)
         Xtrain['pma30_10'] = (self.ma30 - self.ma10).shift(1)
         Xtrain['pma30_5'] = (self.ma30 - self.ma5).shift(1)
@@ -117,8 +126,16 @@ class movingAverageSim:
         Xtrain['rsi'] = self.rsi.shift(1)
         Xtrain = Xtrain.dropna()
         # print(Xtrain)
-        ytrain['Classification'] = np.sign((self.df_stock['Adj Close'].shift(-1)
-                                            - self.df_stock['Open']).dropna().values)
+
+        def classification_func(value):
+            if (value < 0.02):
+                return -1
+            if (value > 0.02):
+                return 1
+        ytrain['Classification'] = ((self.df_stock['Adj Close'].shift(-1)
+                                    - self.df_stock['Open'])/self.df_stock['Open']).dropna().values
+        ytrain['Classification'] = ytrain.apply(lambda x: classification_func(x['Classification']),
+                                                axis=1)
         ytrain = ytrain.iloc[30:]
         # Xvalid = Xtrain[len(Xtrain)-valid-test:len(Xtrain)-test]
         # yvalid = ytrain[len(yvalid)-valid-test:len(Xtrain)-test]

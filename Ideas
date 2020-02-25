@@ -63,3 +63,7 @@ Moving Average Simulation
   - Can't buy/sell at open of that day since we are using the open
     - maybe buy/sell at the median of the high and close price
   - more data the worse it does??!?!?!??!?! overfitting???!?!?!?! what is going on?
+
+TODO:
+- Need to figure out other ways to predict (data may not be IID -> The data might not be enough to predict)
+  - Look at volume? 
