@@ -1,4 +1,4 @@
-By Jimmy Lin and Kelvin Lau
+By Jimmy Lin
 
 Simple Algorithmic Trading Bot
 
