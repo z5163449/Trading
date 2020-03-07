@@ -98,34 +98,38 @@ class movingAverageSim:
         return clf
 
     def create_prediction_data(self,valid=30,test=30):
-        Xtrain = pd.DataFrame(columns=['Open','pAdj_close','pma30_open','pma20_open','pma10_open','pma5_open'
+        Xtrain = pd.DataFrame(columns=['Open','pAdj_close'
+                                        ,'pma30_open','pma20_open','pma10_open','pma5_open'
                                         ,'pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         ytrain = pd.DataFrame(columns=['Classification'])
-        Xvalid = pd.DataFrame(columns=['Open','pAdj_close','pma30_open','pma20_open','pma10_open','pma5_open'
+        Xvalid = pd.DataFrame(columns=['Open','pAdj_close'
+                                        ,'pma30_open','pma20_open','pma10_open','pma5_open'
                                         ,'pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         yvalid = pd.DataFrame(columns=['Classification'])
-        Xhat = pd.DataFrame(columns=['Open','pAdj_close','pma30_open','pma20_open','pma10_open','pma5_open'
+        Xhat = pd.DataFrame(columns=['Open','pAdj_close'
+                                        ,'pma30_open','pma20_open','pma10_open','pma5_open'
                                         ,'pma30_20','pma30_10','pma30_5','pma20_10'
                                         ,'pma20_5','pma10_5','rsi'])
         ytest = pd.DataFrame(columns=['Classification'])
 
         Xtrain['Open'] = self.df_stock['Open']
-        Xtrain['pAdj_close'] = self.df_stock['Adj Close'].shift(1)
-        Xtrain['pma30_open'] = (self.ma30.shift(1) - self.df_stock['Open'])
-        Xtrain['pma20_open'] = (self.ma20.shift(1) - self.df_stock['Open'])
-        Xtrain['pma10_open'] = (self.ma10.shift(1) - self.df_stock['Open'])
-        Xtrain['pma5_open'] = (self.ma5.shift(1) - self.df_stock['Open'])
-        Xtrain['pma30_20'] = (self.ma30 - self.ma20).shift(1)
-        Xtrain['pma30_10'] = (self.ma30 - self.ma10).shift(1)
-        Xtrain['pma30_5'] = (self.ma30 - self.ma5).shift(1)
-        Xtrain['pma20_10'] = (self.ma20 - self.ma10).shift(1)
-        Xtrain['pma20_5'] = (self.ma20 - self.ma5).shift(1)
-        Xtrain['pma10_5'] = (self.ma10 - self.ma5).shift(1)
+        Xtrain['pAdj_close'] = self.df_stock['Adj Close']/self.df_stock['Open'] - 1
+        Xtrain['pma30_open'] = (self.ma30.shift(1)/self.df_stock['Open']) - 1
+        Xtrain['pma20_open'] = (self.ma20.shift(1)/self.df_stock['Open']) - 1
+        Xtrain['pma10_open'] = (self.ma10.shift(1)/self.df_stock['Open']) - 1
+        Xtrain['pma5_open'] = (self.ma5.shift(1)/self.df_stock['Open']) - 1
+        Xtrain['pma30_20'] = (self.ma30/self.ma20).shift(1) - 1
+        Xtrain['pma30_10'] = (self.ma30/self.ma10).shift(1) - 1
+        Xtrain['pma30_5'] = (self.ma30/self.ma5).shift(1) - 1
+        Xtrain['pma20_10'] = (self.ma20/self.ma10).shift(1) - 1
+        Xtrain['pma20_5'] = (self.ma20/self.ma5).shift(1) - 1
+        Xtrain['pma10_5'] = (self.ma10/self.ma5).shift(1) - 1
         Xtrain['rsi'] = self.rsi.shift(1)
         Xtrain = Xtrain.dropna()
         # print(Xtrain)
+
 
         def classification_func(value):
             if (value < 0.02):

@@ -21,8 +21,8 @@ def main():
 	# sim = mAvgSim.movingAverageSim(df_cypt)
 	# net,num_trades,test_error = sim.run_simulation(ndays=10)
 	# sim.plot_graph()
-	# test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/',ndays=10)
-	daily_signal_checker('china_stocks.csv',location='chineseStocks/')
+	test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/',ndays=15)
+	# daily_signal_checker('china_stocks.csv',location='chineseStocks/')
 	# update_open_close('china_stocks.csv',location='chineseStocks/')
 	# tmp = backtest_database('300261.SZ','2019-09-16','2020-02-16',1)
 	# df_stock = tmp.read_csv('chineseStocks/')
@@ -39,12 +39,12 @@ def update_portfolio():
 def daily_signal_checker(stocks,location):
 	ndays=1
 	# scrape_data(pd.read_csv(stocks),location='chineseStocks/',
-	# 						start='2019-09-16',end='2020-02-27')
+							# start='2019-09-16',end='2020-03-07')
 	stock_list = pd.read_csv(stocks)
 	for code in stock_list['Code']:
 		tmp = backtest_database(code,'2019-09-16','2020-02-25',1)
 		df_stock = tmp.read_csv(location=location)
-		open_price = tmp.get_today_open()
+		open_price = float(tmp.get_today_open())
 		df_stock = df_stock.append({'Open' : open_price},ignore_index=True)
 		# print(open_price)
 		sim = mAvgSim.movingAverageSim(df_stock)
@@ -74,7 +74,7 @@ def test_stock_list(stock_list,location,ndays):
 			'Test Error' : test_error
 		},ignore_index=True)
 		# print('Company:',code,'\n Number of Trades',num_trades,'\n Net % return',net)
-	print(np.mean(returns['Test Error']))
+	print("Mean Test Error = ", np.mean(returns['Test Error']))
 	net_profit = np.sum(returns['Net return'])
 	companies_traded = len(returns)
 	mean = stat.mean(returns['Net return'])
