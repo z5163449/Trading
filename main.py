@@ -1,7 +1,6 @@
 from datareader import *
 import matplotlib.pyplot as plt
 from plotting import *
-import statsmodels.api as sm
 from misc import *
 import leastSquares as lsModel
 import masim as mAvgSim
