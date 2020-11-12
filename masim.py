@@ -35,11 +35,11 @@ class movingAverageSim:
         clf = self.random_forest_signals(Xtrain,ytrain)
         signals = clf.predict(Xhat)
         test_error = 1-clf.score(Xhat[:-1],ytest)
-        # print("Testing Error rate =",test_error)
+        print("Testing Error rate =",test_error)
         count = 0
         transaction_cost = 1.002
-        # print(signals)
-        # print(ytest)
+        print(signals)
+        print(ytest)
         # print(Xhat)
         for i in range(len(self.df_stock)-testing,len(self.df_stock)-1):
             # print(self.df_stock['Date'][i])
@@ -72,8 +72,8 @@ class movingAverageSim:
         # std = stat.stdev(self.returns['% return'])
         print(self.returns)
         # print(self.returns['Bought Date']-self.returns['Sold Date'])
-        # print("Net Profit =",net)
-        # print("Mean =",mean)
+        print("Net Profit =",net)
+        print("Mean =",mean)
         return net
 
     def calculate_rsi(self,ndays=10):
