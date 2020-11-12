@@ -13,7 +13,7 @@ from time import mktime
 
 def main():
 	# scrape_data(pd.read_csv('china_stocks.csv'),location='chineseStocks/',
-							# start='2019-09-16',end='2020-02-17')
+	# 						start='2019-09-16',end='2020-11-12')
 	# df_stock = pd.read_csv('603131.csv')
 	# df_cypt = pd.read_csv('ETH-USD.csv')
 	# df_stock = backtest_database('603993.SS','2019-09-16','2020-02-20',1).read_csv(location='chineseStocks/')
@@ -62,7 +62,7 @@ def test_stock_list(stock_list,location,ndays):
 	returns = pd.DataFrame(columns=['Company','No. Trades','Net return','Test Error'])
 	for code in stock_list['Code']:
 		print(code)
-		df_stock = backtest_database(code,'2019-09-16','2020-02-178',1).read_csv(location=location)
+		df_stock = backtest_database(code,'2019-09-16','2020-02-17',1).read_csv(location=location)
 		sim = mAvgSim.movingAverageSim(df_stock)
 		net,num_trades,test_error = sim.run_simulation(ndays=ndays)
 		if num_trades == 0:
