@@ -90,7 +90,7 @@ class backtest_database:
         website = session.get(url)
         soup = BeautifulSoup(website.text,'lxml')
         price = soup.findAll('span')
-        return price[10].text
+        return price[9].text
 
     def get_open_close(self):
         cookies = self._get_crumbs_and_cookies()

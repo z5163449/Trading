@@ -58,7 +58,6 @@ class movingAverageSim:
         						'Sold Date' : sold_date,
         						'% return' :(sold_at - bought_at)/bought_at}, ignore_index=True)
             count+=1
-
         net = self.calculate_profits()
         return net,len(self.returns),test_error
 
@@ -70,10 +69,10 @@ class movingAverageSim:
         net = np.sum(self.returns['% return'])
         mean = stat.mean(self.returns['% return'])
         # std = stat.stdev(self.returns['% return'])
-        print(self.returns)
+        # print(self.returns)
         # print(self.returns['Bought Date']-self.returns['Sold Date'])
-        print("Net Profit =",net)
-        print("Mean =",mean)
+        # print("Net Profit =",net)
+        # print("Mean =",mean)
         return net
 
     def calculate_rsi(self,ndays=10):
