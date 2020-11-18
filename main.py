@@ -38,14 +38,14 @@ def update_portfolio():
 	portfolio = pd.read_csv(portfolio)
 
 def daily_signal_checker(stocks,location):
-	ndays=1
+	ndays=2
 	# Get updated stock prices (whole csv)
 	# scrape_data(pd.read_csv(stocks),location='chineseStocks/',
-	# 						start='2019-09-16',end='2020-11-17')
+	# 						start='2019-09-16',end='2020-11-18')
 	# Run through stock list to get opens and predict
 	stock_list = pd.read_csv(stocks)
 	for code in stock_list['Code']:
-		tmp = backtest_database(code,'2019-09-16','2020-11-17',1)
+		tmp = backtest_database(code,'2019-09-16','2020-11-18',1)
 		df_stock = tmp.read_csv(location=location)
 		open_price = float(tmp.get_today_open())
 		# print(open_price)
