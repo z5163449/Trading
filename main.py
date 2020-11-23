@@ -22,7 +22,7 @@ def main():
 	# sim = mAvgSim.movingAverageSim(df_cypt)
 	# net,num_trades,test_error = sim.run_simulation(ndays=15)
 	# sim.plot_graph()
-	# test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/',ndays=15)
+	# test_stock_list(stock_list=pd.read_csv('china_stocks.csv'),location='chineseStocks/',ndays=4)
 	daily_signal_checker('china_stocks.csv',location='chineseStocks/')
 	# update_open_close('china_stocks.csv',location='chineseStocks/')
 	# tmp = backtest_database('300261.SZ','2019-09-16','2020-02-16',1)
@@ -38,17 +38,18 @@ def update_portfolio():
 	portfolio = pd.read_csv(portfolio)
 
 def daily_signal_checker(stocks,location):
-	ndays=2
+	ndays=5
 	# Get updated stock prices (whole csv)
 	# scrape_data(pd.read_csv(stocks),location='chineseStocks/',
-	# 						start='2019-09-16',end='2020-11-18')
+	# 						start='2019-09-16',end='2020-11-23')
 	# Run through stock list to get opens and predict
 	stock_list = pd.read_csv(stocks)
 	for code in stock_list['Code']:
 		tmp = backtest_database(code,'2019-09-16','2020-11-18',1)
 		df_stock = tmp.read_csv(location=location)
 		open_price = float(tmp.get_today_open())
-		# print(open_price)
+		# print(code)
+		print(open_price)
 		df_stock = df_stock.append({'Open' : open_price},ignore_index=True)
 		sim = mAvgSim.movingAverageSim(df_stock)
 		signals = sim.produce_buy_sell(ndays=ndays)
