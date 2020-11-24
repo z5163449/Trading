@@ -38,10 +38,10 @@ def update_portfolio():
 	portfolio = pd.read_csv(portfolio)
 
 def daily_signal_checker(stocks,location):
-	ndays=5
+	ndays=6
 	# Get updated stock prices (whole csv)
 	# scrape_data(pd.read_csv(stocks),location='chineseStocks/',
-	# 						start='2019-09-16',end='2020-11-23')
+	# 						start='2019-09-16',end='2020-11-24')
 	# Run through stock list to get opens and predict
 	stock_list = pd.read_csv(stocks)
 	for code in stock_list['Code']:
